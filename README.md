@@ -10,24 +10,29 @@ This suite brings advanced AI capabilities, agentic workflows, and Model Context
 
 Here is a high-level overview of how the components within the Frappe AI Suite interact with one another and your existing Frappe/ERPNext application:
 
-```mermaid
-flowchart TD
-    User([User]) -->|Interacts via| UI[Frappe AI UI]
-    UI -->|Sends prompt & context| Agent[Frappe AI Agent]
-    
-    subgraph Vyogo Frappe AI Suite
-        UI
-        Agent
-        MCP[Frappe MCP Server]
-    end
-    
-    Agent <-->|Requests tools & context via MCP Protocol| MCP
-    MCP <-->|Reads/Writes via Frappe ORM API| Frappe[(Frappe / ERPNext Database)]
-    
-    style UI fill:#3B82F6,stroke:#1D4ED8,stroke-width:2px,color:#fff
-    style Agent fill:#10B981,stroke:#047857,stroke-width:2px,color:#fff
-    style MCP fill:#8B5CF6,stroke:#6D28D9,stroke-width:2px,color:#fff
-    style Frappe fill:#F59E0B,stroke:#B45309,stroke-width:2px,color:#fff
+```text
+      [ User ]
+         │
+         │ Interacts via
+         ▼
+ ┌──────────────────────────────────────────────────┐
+ │ Vyogo Frappe AI Suite                            │
+ │                                                  │
+ │   [ Frappe AI UI ]                               │
+ │         │                                        │
+ │         │ Sends prompt & context                 │
+ │         ▼                                        │
+ │   [ Frappe AI Agent ]                            │
+ │         │                                        │
+ │         │ Requests tools & context via MCP       │
+ │         ▼                                        │
+ │   [ Frappe MCP Server ]                          │
+ │                                                  │
+ └──────────────────────────────────────────────────┘
+         │
+         │ Reads/Writes via Frappe ORM API
+         ▼
+ [ Frappe / ERPNext ]
 ```
 
 The suite is broken down into three decoupled yet highly synergistic components, included here as Git Submodules:
