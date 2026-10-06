@@ -14,3 +14,19 @@ services:
       - frappe-mcp-server
       - frappe-ai-agent
       - erpnext
+
+  # Override MCP Server for live development
+  frappe-mcp-server:
+    image: golang:1.23-alpine
+    working_dir: /app
+    volumes:
+      - ../frappe-mcp-server:/app:cached
+    command: ["go", "run", "main.go"]
+
+  # Override AI Agent for live development
+  frappe-ai-agent:
+    volumes:
+      # Mount only the source code to avoid clobbering the container's .venv
+      - ../frappe-ai-agent/src:/app/src:cached
+    # Force live reload mode for uvicorn
+    command: ["/bin/sh", "-c", "/app/.venv/bin/uvicorn ai_agent.app:create_app --factory --host 0.0.0.0 --port 8484 --reload"]

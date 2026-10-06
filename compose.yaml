@@ -57,7 +57,7 @@ services:
 
   # 4. Frappe / ERPNext Site (from Frappista SNE project)
   erpnext:
-    image: docker.io/vyogo/erpnext:sne-version-15
+    image: docker.io/vyogo/erpnext:sne-version-16
     restart: unless-stopped
     ports:
       - "${ERPNEXT_PORT:-8000}:8000"
