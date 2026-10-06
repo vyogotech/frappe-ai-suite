@@ -1,4 +1,4 @@
-# 🚀 Vyogo Frappe AI Suite
+# Vyogo Frappe AI Suite
 
 Welcome to the **Vyogo Frappe AI Suite** monorepo! This repository unifies the three core pillars of the Frappe AI ecosystem maintained by [VyogoTech](https://github.com/vyogotech). 
 
@@ -6,7 +6,7 @@ This suite brings advanced AI capabilities, agentic workflows, and Model Context
 
 ---
 
-## 🏗 Architecture Overview
+## Architecture Overview
 
 The suite is broken down into three decoupled yet highly synergistic components, included here as Git Submodules:
 
@@ -30,7 +30,7 @@ The suite is broken down into three decoupled yet highly synergistic components,
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js (v18+)
@@ -53,13 +53,13 @@ git submodule update --init --recursive
 
 ---
 
-## 📚 Documentation
+## Documentation
 - [MCP Server Docs](./frappe-mcp-server/README.md)
 - [AI Agent Docs](./frappe-ai-agent/README.md)
 - [UI App Docs](./frappe-ai-ui/README.md)
 
-## 🤝 Contributing
+## Contributing
 Please review the contribution guidelines in the respective submodule repositories. We follow standard Git Flow and Conventional Commits.
 
 ---
-*Built with ❤️ by [VyogoTech](https://github.com/vyogotech)*
+*Built by [VyogoTech](https://github.com/vyogotech)*
