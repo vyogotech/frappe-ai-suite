@@ -1,0 +1,9 @@
+[submodule "frappe-mcp-server"]
+	path = frappe-mcp-server
+	url = https://github.com/vyogotech/frappe-mcp-server.git
+[submodule "frappe-ai-agent"]
+	path = frappe-ai-agent
+	url = https://github.com/vyogotech/frappe-ai-agent.git
+[submodule "frappe-ai-ui"]
+	path = frappe-ai-ui
+	url = https://github.com/vyogotech/frappe_ai.git
