@@ -55,10 +55,39 @@ services:
     volumes:
       - ollama_data:/root/.ollama
 
+  # 4. Frappe / ERPNext Site (from Frappista SNE project)
+  erpnext:
+    image: docker.io/vyogo/erpnext:sne-version-15
+    restart: unless-stopped
+    ports:
+      - "${ERPNEXT_PORT:-8000}:8000"
+    environment:
+      SITES: erpnext.local
+      SITE_NAME: erpnext.local
+      ADMIN_PASSWORD: ${ERPNEXT_ADMIN_PASSWORD:-admin}
+      DEVELOPER_MODE: ${ERPNEXT_DEV_MODE:-1}
+    volumes:
+      - erpnext_data:/home/frappe/frappe-bench/sites
+      - erpnext_logs:/home/frappe/frappe-bench/logs
+      # Mount the local UI submodule directly into the Frappe apps directory
+      - ./frappe-ai-ui:/home/frappe/frappe-bench/apps/frappe_ai
+    networks:
+      - frappe-ai-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
 networks:
   frappe-ai-network:
     driver: bridge
 
 volumes:
   ollama_data:
+    driver: local
+  erpnext_data:
+    driver: local
+  erpnext_logs:
     driver: local

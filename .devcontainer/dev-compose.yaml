@@ -13,3 +13,4 @@ services:
     depends_on:
       - frappe-mcp-server
       - frappe-ai-agent
+      - erpnext
