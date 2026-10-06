@@ -1,0 +1,26 @@
+{
+  "name": "Vyogo Frappe AI Suite",
+  "dockerComposeFile": [
+    "../compose.yaml",
+    "dev-compose.yaml"
+  ],
+  "service": "dev-env",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "golang.go",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "go.gopath": "/go"
+      }
+    }
+  },
+  "remoteUser": "root",
+  "postCreateCommand": "echo 'Ready for development'"
+}

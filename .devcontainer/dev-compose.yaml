@@ -1,0 +1,15 @@
+services:
+  dev-env:
+    # A complete dev container image supporting Node.js, Python, and Go
+    image: mcr.microsoft.com/devcontainers/universal:2
+    volumes:
+      # Mount the root of the monorepo to the container workspace
+      - ..:/workspace:cached
+    # Overrides default command so things don't shut down after the process ends.
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    networks:
+      - frappe-ai-network
+    # Link to the other services
+    depends_on:
+      - frappe-mcp-server
+      - frappe-ai-agent

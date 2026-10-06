@@ -1,0 +1,64 @@
+services:
+  # 1. MCP Server
+  frappe-mcp-server:
+    build:
+      context: ./frappe-mcp-server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${MCP_PORT:-8080}:8080"
+    environment:
+      FRAPPE_BASE_URL: ${FRAPPE_BASE_URL:-http://erpnext:8000}
+      FRAPPE_API_KEY: ${FRAPPE_API_KEY}
+      FRAPPE_API_SECRET: ${FRAPPE_API_SECRET}
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 8080
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    networks:
+      - frappe-ai-network
+    volumes:
+      - ./frappe-mcp-server/config.yaml.example:/app/config.yaml:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # 2. AI Agent
+  frappe-ai-agent:
+    build:
+      context: ./frappe-ai-agent
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "${AGENT_PORT:-8484}:8484"
+    environment:
+      MCP_SERVER_URL: http://frappe-mcp-server:8080
+    networks:
+      - frappe-ai-network
+    depends_on:
+      - frappe-mcp-server
+
+  # 3. Ollama (Optional, for Local LLM inference)
+  ollama:
+    image: docker.io/ollama/ollama:latest
+    restart: unless-stopped
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    profiles:
+      - full-stack
+    environment:
+      OLLAMA_HOST: 0.0.0.0:11434
+      OLLAMA_ORIGINS: "*"
+    networks:
+      - frappe-ai-network
+    volumes:
+      - ollama_data:/root/.ollama
+
+networks:
+  frappe-ai-network:
+    driver: bridge
+
+volumes:
+  ollama_data:
+    driver: local
