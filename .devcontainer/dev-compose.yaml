@@ -1,7 +1,7 @@
 services:
   dev-env:
-    # A complete dev container image supporting Node.js, Python, and Go
-    image: mcr.microsoft.com/devcontainers/universal:2
+    # Use a Python base image (supports arm64 on Mac). Go can be installed via devcontainer features if needed.
+    image: mcr.microsoft.com/devcontainers/python:3.12-bookworm
     volumes:
       # Mount the root of the monorepo to the container workspace
       - ..:/workspace:cached
@@ -17,7 +17,9 @@ services:
 
   # Override MCP Server for live development
   frappe-mcp-server:
-    image: golang:1.23-alpine
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile.mcp-dev
     working_dir: /app
     volumes:
       - ../frappe-mcp-server:/app:cached
