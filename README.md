@@ -10,19 +10,19 @@ This suite brings advanced AI capabilities, agentic workflows, and Model Context
 
 The suite is broken down into three decoupled yet highly synergistic components, included here as Git Submodules:
 
-### 1. [Frappe MCP Server](./frappe-mcp-server)
+### 1. [Frappe MCP Server](https://github.com/vyogotech/frappe-mcp-server)
 **The Data & Capability Layer**
 - Implements the [Model Context Protocol (MCP)](https://modelcontextprotocol.io).
 - Exposes Frappe ORM, Document interactions, and Meta-data as standardized tools and resources to LLMs.
 - Acts as the secure bridge between your Frappe data and any MCP-compatible AI client.
 
-### 2. [Frappe AI Agent](./frappe-ai-agent)
+### 2. [Frappe AI Agent](https://github.com/vyogotech/frappe-ai-agent)
 **The Orchestration & Reasoning Layer**
 - The intelligent agent that orchestrates complex workflows within the Frappe ecosystem.
 - Consumes the MCP server to read contexts, execute Frappe actions, and formulate structured plans.
 - Capable of autonomous task execution tailored to Frappe/ERPNext business logic.
 
-### 3. [Frappe AI UI](./frappe-ai-ui)
+### 3. [Frappe AI UI](https://github.com/vyogotech/frappe-ai-ui)
 **The Interaction & Presentation Layer**
 - A seamless conversational AI interface and sidebar integration.
 - Plugs directly into your ERPNext/Frappe workspace to allow users to interact with the AI Agent and MCP server in real-time.
@@ -54,9 +54,9 @@ git submodule update --init --recursive
 ---
 
 ## Documentation
-- [MCP Server Docs](./frappe-mcp-server/README.md)
-- [AI Agent Docs](./frappe-ai-agent/README.md)
-- [UI App Docs](./frappe-ai-ui/README.md)
+- [MCP Server Docs](https://github.com/vyogotech/frappe-mcp-server/blob/main/README.md)
+- [AI Agent Docs](https://github.com/vyogotech/frappe-ai-agent/blob/main/README.md)
+- [UI App Docs](https://github.com/vyogotech/frappe-ai-ui/blob/main/README.md)
 
 ## Contributing
 Please review the contribution guidelines in the respective submodule repositories. We follow standard Git Flow and Conventional Commits.
