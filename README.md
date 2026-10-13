@@ -57,6 +57,24 @@ The suite is broken down into three decoupled yet highly synergistic components,
 
 ---
 
+## Multi-tenancy
+
+One deployment of the suite can serve many Frappe sites, whether they live on one bench or across several. A single-site install needs nothing extra.
+
+- **Every request names its site.** The UI app tells the agent which site the user is on, the agent passes that on to the MCP server, and both use it on every call back to Frappe. A user's session is only ever accepted for the site that issued it.
+- **Each site can live on a different bench.** The agent and the MCP server look up a site's bench in their own configuration. A site they have not been told about is refused, so a request can never be steered to an arbitrary backend.
+- **Tenants never share state.** Session caches, CSRF tokens, rate limits and chat-history lookups are kept per site, and session ids are never held in clear.
+
+| Deployment | What to configure |
+| --- | --- |
+| One site on one bench (self-hosted, local compose) | Nothing beyond the single Frappe URL each service already takes |
+| Several sites on one shared bench | The same single URL; the site name routes the request inside the bench |
+| Many benches behind one suite deployment | A site-to-bench routes file, picked up without a restart when it changes |
+
+See [DEPLOYMENT_PLAN.md](DEPLOYMENT_PLAN.md) for the Kubernetes rollout and each component's README for its settings.
+
+---
+
 ## Getting Started
 
 ### Prerequisites
