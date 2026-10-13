@@ -394,7 +394,7 @@ spec:
 ### 3.3 Bench Pool & Site Setup (`frappe_ai` via FPM)
 
 #### Step 1: Add `frappe_ai` to the pool allowlist (`FrappeBench`)
-In the bench manifest (e.g. `vyogo-cloud-gitops/manifests/pool/10-standard-v16-001.yaml`):
+`frappe_ai` is published to the Vyogo FPM registry (`ghcr.io/vyogotech/fpm`, package `vyogotech/frappe_ai`) by its own Package workflow: every tag `v<X.Y.Z>` as a release, every push to `main` as a `-git.<date>.<sha>` prerelease snapshot. The package ships its compiled desk bundle and Python dependencies for amd64 and arm64, so the pool needs no build step. In the bench manifest (e.g. `vyogo-cloud-gitops/manifests/pool/10-standard-v16-001.yaml`):
 ```yaml
 spec:
   apps:
