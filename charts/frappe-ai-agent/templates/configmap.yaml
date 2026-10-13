@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "frappe-ai-agent.fullname" . }}-config
+  labels:
+    {{- include "frappe-ai-agent.labels" . | nindent 4 }}
+data:
+  AI_AGENT_MCP_SERVER_URL: {{ .Values.config.mcpServerUrl | quote }}
+  AI_AGENT_FRAPPE_URL: {{ .Values.config.frappeUrl | quote }}
+  AI_AGENT_LLM_PROVIDER: {{ .Values.config.llmProvider | quote }}
+  AI_AGENT_LLM_BASE_URL: {{ .Values.config.llmBaseUrl | quote }}
+  AI_AGENT_LLM_MODEL: {{ .Values.config.llmModel | quote }}
+  AI_AGENT_WORKERS: {{ .Values.config.workers | quote }}

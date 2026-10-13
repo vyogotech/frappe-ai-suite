@@ -1,0 +1,14 @@
+apiVersion: v2
+name: frappe-ai-agent
+description: Helm chart for deploying the Frappe AI Agent in Kubernetes
+type: application
+version: 0.1.0
+appVersion: "1.1.4"
+keywords:
+  - frappe
+  - ai-agent
+  - kubernetes
+home: https://vyogo.tech
+maintainers:
+  - name: Vyogo Technologies
+    email: support@vyogo.tech

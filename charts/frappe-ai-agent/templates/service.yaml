@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "frappe-ai-agent.fullname" . }}
+  labels:
+    {{- include "frappe-ai-agent.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort | default .Values.service.port }}
+      protocol: TCP
+  selector:
+    {{- include "frappe-ai-agent.selectorLabels" . | nindent 4 }}

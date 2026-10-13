@@ -1,0 +1,83 @@
+replicaCount: 2
+
+image:
+  repository: ghcr.io/vyogotech/frappe-ai-agent
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets:
+  - name: ghcr-pull-secret
+
+nameOverride: ""
+fullnameOverride: "frappe-ai-agent"
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1001
+  runAsGroup: 1001
+  fsGroup: 1001
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  capabilities:
+    drop:
+      - ALL
+
+service:
+  type: ClusterIP
+  port: 8484
+  targetPort: 8484
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+
+probes:
+  liveness:
+    httpGet:
+      path: /health
+      port: 8484
+    initialDelaySeconds: 15
+    periodSeconds: 30
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readiness:
+    httpGet:
+      path: /health
+      port: 8484
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 3
+    failureThreshold: 3
+
+config:
+  mcpServerUrl: "http://frappe-mcp-server:8080/mcp"
+  frappeUrl: "http://no-default-bench.invalid:8000"
+  llmProvider: "ollama"
+  llmBaseUrl: "http://ollama.vyogo-cloud.svc.cluster.local:11434"
+  llmModel: "qwen3.5:9b"
+  workers: "1"
+
+secretKeyRef:
+  enabled: false
+  secretName: "frappe-ai-agent-secrets"
+  key: "llm-api-key"
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 8
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
