@@ -19,7 +19,7 @@ services:
     volumes:
       - ./frappe-mcp-server/config.yaml.example:/app/config.yaml:ro
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -33,7 +33,13 @@ services:
     ports:
       - "${AGENT_PORT:-8484}:8484"
     environment:
-      MCP_SERVER_URL: http://frappe-mcp-server:8080
+      AI_AGENT_MCP_SERVER_URL: http://frappe-mcp-server:8080/mcp
+      AI_AGENT_FRAPPE_URL: http://erpnext:8000
+      MCP_SERVER_URL: http://frappe-mcp-server:8080/mcp
+      AI_AGENT_LLM_PROVIDER: ${AI_AGENT_LLM_PROVIDER:-ollama}
+      AI_AGENT_LLM_BASE_URL: ${AI_AGENT_LLM_BASE_URL:-http://ollama:11434}
+      AI_AGENT_LLM_MODEL: ${AI_AGENT_LLM_MODEL:-qwen3.5:9b}
+      AI_AGENT_LLM_API_KEY: ${AI_AGENT_LLM_API_KEY:-}
     networks:
       - frappe-ai-network
     depends_on:
@@ -80,6 +86,30 @@ services:
       retries: 3
       start_period: 120s
 
+  # 5. Second Frappe / ERPNext Bench (Multi-tenant verification)
+  erpnext-2:
+    image: docker.io/vyogo/erpnext:sne-version-16
+    restart: unless-stopped
+    ports:
+      - "${ERPNEXT_2_PORT:-8002}:8000"
+    environment:
+      SITES: erpnext.local
+      SITE_NAME: erpnext.local
+      ADMIN_PASSWORD: ${ERPNEXT_ADMIN_PASSWORD:-admin}
+      DEVELOPER_MODE: ${ERPNEXT_DEV_MODE:-1}
+    volumes:
+      - erpnext2_data:/home/frappe/frappe-bench/sites
+      - erpnext2_logs:/home/frappe/frappe-bench/logs
+      - ./frappe-ai-ui:/home/frappe/frappe-bench/apps/frappe_ai
+    networks:
+      - frappe-ai-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
 networks:
   frappe-ai-network:
     driver: bridge
@@ -90,4 +120,8 @@ volumes:
   erpnext_data:
     driver: local
   erpnext_logs:
+    driver: local
+  erpnext2_data:
+    driver: local
+  erpnext2_logs:
     driver: local
