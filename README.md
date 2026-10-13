@@ -18,7 +18,7 @@ Here is a high-level overview of how the components within the Frappe AI Suite i
  ┌──────────────────────────────────────────────────┐
  │ Vyogo Frappe AI Suite                            │
  │                                                  │
- │   [ Frappe AI UI ]                               │
+ │   [ AI Sidebar ]                                 │
  │         │                                        │
  │         │ Sends prompt & context                 │
  │         ▼                                        │
@@ -49,9 +49,9 @@ The suite is broken down into three decoupled yet highly synergistic components,
 - Consumes the MCP server to read contexts, execute Frappe actions, and formulate structured plans.
 - Capable of autonomous task execution tailored to Frappe/ERPNext business logic.
 
-### 3. [Frappe AI UI](https://github.com/vyogotech/frappe_ai)
-**The Interaction & Presentation Layer**
-- A seamless conversational AI interface and sidebar integration.
+### 3. [AI Sidebar](https://github.com/vyogotech/frappe_ai)
+**The Interaction & Presentation Layer** (repository and app module: `frappe_ai`)
+- AI Sidebar by Vyogo Technologies: a conversational AI interface built into the Frappe Desk.
 - Plugs directly into your ERPNext/Frappe workspace to allow users to interact with the AI Agent and MCP server in real-time.
 - Features intuitive chat UI, prompt templates, and seamless context awareness of the active Frappe page.
 
@@ -101,7 +101,7 @@ git submodule update --init --recursive
 ## Documentation
 - [MCP Server Docs](https://github.com/vyogotech/frappe-mcp-server/blob/main/README.md)
 - [AI Agent Docs](https://github.com/vyogotech/frappe-ai-agent/blob/main/README.md)
-- [UI App Docs](https://github.com/vyogotech/frappe_ai/blob/main/README.md)
+- [AI Sidebar Docs](https://github.com/vyogotech/frappe_ai/blob/main/README.md)
 
 ## Contributing
 Please review the contribution guidelines in the respective submodule repositories. We follow standard Git Flow and Conventional Commits.
