@@ -47,6 +47,7 @@ The suite is broken down into three decoupled yet highly synergistic components,
 **The Orchestration & Reasoning Layer**
 - The intelligent agent that orchestrates complex workflows within the Frappe ecosystem.
 - Consumes the MCP server to read contexts, execute Frappe actions, and formulate structured plans.
+- Carries its own `web_search` and `fetch_web_page` tools, backed by the SearXNG that `compose.yaml` runs beside it (or Brave / Tavily with a key), so answers can reach outside the database without another MCP server.
 - Capable of autonomous task execution tailored to Frappe/ERPNext business logic.
 
 ### 3. [AI Sidebar](https://github.com/vyogotech/frappe_ai)

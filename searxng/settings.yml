@@ -1,0 +1,12 @@
+# SearXNG beside the agent: the backend of its built-in web_search tool (AI_AGENT_WEB_SEARCH_PROVIDER=searxng).
+# Only what the agent needs is changed from the image's defaults: the JSON output the agent reads, and no
+# per-client rate limiter, since every query arrives from the one agent container. The secret comes from
+# the SEARXNG_SECRET environment variable compose.yaml sets; SearXNG reads it over this file.
+use_default_settings: true
+server:
+  limiter: false
+search:
+  safe_search: 1
+  formats:
+    - html
+    - json

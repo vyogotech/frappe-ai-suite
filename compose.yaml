@@ -40,10 +40,34 @@ services:
       AI_AGENT_LLM_BASE_URL: ${AI_AGENT_LLM_BASE_URL:-http://ollama:11434}
       AI_AGENT_LLM_MODEL: ${AI_AGENT_LLM_MODEL:-qwen3.5:9b}
       AI_AGENT_LLM_API_KEY: ${AI_AGENT_LLM_API_KEY:-}
+      # The agent's own web_search / fetch_web_page tools read the SearXNG below. Set the
+      # provider to `off` to run without web access, or to `brave` / `tavily` with a key.
+      AI_AGENT_WEB_SEARCH_PROVIDER: ${AI_AGENT_WEB_SEARCH_PROVIDER:-searxng}
+      AI_AGENT_WEB_SEARCH_URL: ${AI_AGENT_WEB_SEARCH_URL:-http://searxng:8080}
+      AI_AGENT_WEB_SEARCH_API_KEY: ${AI_AGENT_WEB_SEARCH_API_KEY:-}
     networks:
       - frappe-ai-network
     depends_on:
       - frappe-mcp-server
+      - searxng
+
+  # 2b. SearXNG — self-hosted, keyless web search for the agent. Not published on a host
+  # port: only the agent talks to it, over the compose network.
+  searxng:
+    image: docker.io/searxng/searxng:latest
+    restart: unless-stopped
+    environment:
+      SEARXNG_SECRET: ${SEARXNG_SECRET:-change-me}
+      SEARXNG_BASE_URL: http://searxng:8080/
+    volumes:
+      - ./searxng/settings.yml:/etc/searxng/settings.yml:ro
+    networks:
+      - frappe-ai-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
   # 3. Ollama (Optional, for Local LLM inference)
   ollama:
