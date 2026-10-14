@@ -6,7 +6,7 @@ use_default_settings: true
 server:
   limiter: false
 search:
-  safe_search: 1
+  safe_search: 2
   formats:
     - html
     - json

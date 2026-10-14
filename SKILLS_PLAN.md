@@ -1,7 +1,6 @@
 # Assistant Skills — Plan
 
-Status: **plan only, nothing built.** The suite itself (confirmation flow, web search, deployment)
-ships first; skills follow it.
+Status: **Implemented.** The standalone repository `vyogotech/frappe-live-assist-skill` contains all 9 assistant skills, YAML scenarios, test scripts, and CI workflow. The agent loads skills on demand via the `load_skill` tool and catalog in the system prompt, supports `risk: always-ask` in confirmation cards and policy enforcement, and provides the per-site `AI Skill` DocType in `frappe_ai`.
 
 ## Why skills
 
