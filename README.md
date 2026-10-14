@@ -71,7 +71,7 @@ One deployment of the suite can serve many Frappe sites, whether they live on on
 | Several sites on one shared bench | The same single URL; the site name routes the request inside the bench |
 | Many benches behind one suite deployment | A site-to-bench routes file, picked up without a restart when it changes |
 
-See [DEPLOYMENT_PLAN.md](DEPLOYMENT_PLAN.md) for the Kubernetes rollout and each component's README for its settings.
+See each component's README for its settings and configuration.
 
 ---
 
